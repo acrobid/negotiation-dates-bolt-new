@@ -185,6 +185,7 @@ const timelineEvents = ref<TimelineEvent[]>([
         class="current-indicator"
       ></div>
     </div>
+    <slot />
   </div>
 </template>
 
