@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import Timeline from "./components/Timeline.vue";
 import AnimatedBackground from "./components/AnimatedBackground.vue";
+import "@khmyznikov/pwa-install";
 
 const isVisible = ref(false);
 
@@ -17,6 +18,7 @@ onMounted(() => {
       <h1>Negotiation dates</h1>
       <Timeline />
     </main>
+    <pwa-install></pwa-install>
   </div>
 </template>
 
