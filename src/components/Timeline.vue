@@ -145,7 +145,7 @@ const timelineEvents = ref<TimelineEvent[]>([
       <template v-else-if="currentPosition.type === 'between'">
         <div class="status-badge between">
           <span class="between-indicator"></span>
-          Between Negotiation Sessions
+          Between Sessions
         </div>
         <div class="between-details" v-if="currentPosition.nextEvent">
           <span
@@ -171,6 +171,7 @@ const timelineEvents = ref<TimelineEvent[]>([
           'next-event':
             currentPosition?.type === 'between' &&
             currentPosition.nextEvent === event,
+          past: getTimelineStatus(event) === 'past',
         },
       ]"
       :style="{ animationDelay: `${index * 0.2}s` }"
@@ -247,11 +248,11 @@ const timelineEvents = ref<TimelineEvent[]>([
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  opacity: 0;
-  transform: translateX(-50px);
-  animation: slideIn 0.6s ease-out forwards;
+  @starting-style {
+    transform: translateX(-50px);
+  }
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  transition: all 1s ease;
   position: relative;
   padding-left: 3rem;
 }
@@ -285,7 +286,9 @@ const timelineEvents = ref<TimelineEvent[]>([
 }
 
 .timeline-event.past {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 1);
   opacity: 0.5;
+  transform: translateX(-20px);
 }
 
 .timeline-event.current {
@@ -335,13 +338,6 @@ const timelineEvents = ref<TimelineEvent[]>([
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-}
-
-@keyframes slideIn {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
 
 @keyframes pulse {

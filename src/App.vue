@@ -24,7 +24,6 @@ onMounted(() => {
 .app-container {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   position: relative;
 }
 
@@ -43,12 +42,22 @@ main.visible {
 }
 
 h1 {
-  font-size: 4rem;
-  margin-bottom: 2rem;
-  background: linear-gradient(45deg, #ffffff, #ffffff22);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin: 0;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid var(--accent-color);
   text-align: center;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem;
+  }
 }
 </style>
