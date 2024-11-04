@@ -34,7 +34,7 @@ const formatDateRange = (start: Date, end: Date): string => {
   return `${startMonth} ${start.getDate()} - ${endMonth} ${end.getDate()}`;
 };
 
-const currentDate = ref(new Date());
+const currentDate = ref(new Date()); // October 21
 
 // Update current date every minute
 setInterval(() => {
@@ -183,10 +183,7 @@ const timelineEvents = ref<TimelineEvent[]>([
       <div
         v-if="getTimelineStatus(event) === 'current'"
         class="current-indicator"
-      >
-        <span class="pulse"></span>
-        <span class="text">Current</span>
-      </div>
+      ></div>
     </div>
   </div>
 </template>
@@ -219,21 +216,21 @@ const timelineEvents = ref<TimelineEvent[]>([
 }
 
 .status-badge.current {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
 }
 
 .status-badge.between {
-  background: rgba(255, 193, 7, 0.2);
-  color: #ffc107;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .between-indicator {
   width: 10px;
   height: 10px;
-  background: #ffc107;
+  background: #ffffff;
   border-radius: 50%;
-  animation: glow 1.5s ease-in-out infinite alternate;
+  animation: glow 2s infinite;
 }
 
 .between-details {
@@ -258,8 +255,8 @@ const timelineEvents = ref<TimelineEvent[]>([
 }
 
 .next-event {
-  border-color: #ffc107;
-  background: rgba(255, 193, 7, 0.1);
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .status-indicator {
@@ -278,7 +275,7 @@ const timelineEvents = ref<TimelineEvent[]>([
 }
 
 .timeline-event.current .status-indicator {
-  background: #ffffff;
+  background: #ffc107;
 }
 
 .timeline-event.upcoming .status-indicator {
@@ -292,8 +289,8 @@ const timelineEvents = ref<TimelineEvent[]>([
 }
 
 .timeline-event.current {
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
+  border-color: #ffc107;
+  background: rgba(255, 193, 7, 0.1);
   transform: scale(1.02);
 }
 
@@ -327,13 +324,13 @@ const timelineEvents = ref<TimelineEvent[]>([
 .pulse {
   width: 10px;
   height: 10px;
-  background: #ffffff;
+  background: #ffc107;
   border-radius: 50%;
   animation: pulse 2s infinite;
 }
 
 .current-indicator .text {
-  color: #ffffff;
+  color: #ffc107;
   font-weight: bold;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -342,22 +339,23 @@ const timelineEvents = ref<TimelineEvent[]>([
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    box-shadow: 0 0 0 20px rgba(255, 193, 7, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
   }
 }
 
 @keyframes glow {
-  from {
-    box-shadow: 0 0 5px #ffc107, 0 0 10px #ffc107, 0 0 15px #ffc107;
+  0%,
+  100% {
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
   }
-  to {
-    box-shadow: 0 0 10px #ffc107, 0 0 20px #ffc107, 0 0 30px #ffc107;
+  50% {
+    box-shadow: 0 0 20px #ffffff, 0 0 40px #ffffff, 0 0 60px #ffffff;
   }
 }
 </style>
