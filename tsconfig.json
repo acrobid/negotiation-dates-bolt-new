@@ -1,12 +1,12 @@
 {
-  "module": "ESNext",
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-  "moduleResolution": "Bundler",
-  "types": ["dom-chromium-installation-events", "web-app-manifest"]
-}
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["dom-chromium-installation-events", "web-app-manifest"]
+  }
 }
