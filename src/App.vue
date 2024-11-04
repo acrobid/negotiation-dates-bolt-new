@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import Timeline from './components/Timeline.vue'
-import AnimatedBackground from './components/AnimatedBackground.vue'
+import { ref, onMounted } from "vue";
+import Timeline from "./components/Timeline.vue";
+import AnimatedBackground from "./components/AnimatedBackground.vue";
 
-const isVisible = ref(false)
+const isVisible = ref(false);
 
 onMounted(() => {
-  isVisible.value = true
-})
+  isVisible.value = true;
+});
 </script>
 
 <template>
@@ -46,6 +46,7 @@ h1 {
   font-size: 4rem;
   margin-bottom: 2rem;
   background: linear-gradient(45deg, #ffffff, #ffffff22);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;

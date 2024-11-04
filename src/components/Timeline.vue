@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 
 interface TimelineEvent {
   dateRange: {
@@ -10,103 +10,127 @@ interface TimelineEvent {
 }
 
 const formatDateRange = (start: Date, end: Date): string => {
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December']
-  
-  const startMonth = monthNames[start.getMonth()]
-  const endMonth = monthNames[end.getMonth()]
-  
-  if (startMonth === endMonth) {
-    return `${startMonth} ${start.getDate()}-${end.getDate()}`
-  }
-  return `${startMonth} ${start.getDate()} - ${endMonth} ${end.getDate()}`
-}
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
 
-const currentDate = ref(new Date())
+  const startMonth = monthNames[start.getMonth()];
+  const endMonth = monthNames[end.getMonth()];
+
+  if (startMonth === endMonth) {
+    return `${startMonth} ${start.getDate()}-${end.getDate()}`;
+  }
+  return `${startMonth} ${start.getDate()} - ${endMonth} ${end.getDate()}`;
+};
+
+const currentDate = ref(new Date());
 
 // Update current date every minute
 setInterval(() => {
-  currentDate.value = new Date()
-}, 60000)
+  currentDate.value = new Date();
+}, 60000);
 
 const findCurrentPosition = (events: TimelineEvent[]) => {
   for (let i = 0; i < events.length; i++) {
-    const event = events[i]
-    const nextEvent = events[i + 1]
-    
+    const event = events[i];
+    const nextEvent = events[i + 1];
+
     // If we're in an event's date range
-    if (currentDate.value >= event.dateRange.start && currentDate.value <= event.dateRange.end) {
-      return { type: 'during', event }
+    if (
+      currentDate.value >= event.dateRange.start &&
+      currentDate.value <= event.dateRange.end
+    ) {
+      return { type: "during", event };
     }
-    
+
     // If we're between this event and the next one
-    if (nextEvent && currentDate.value > event.dateRange.end && currentDate.value < nextEvent.dateRange.start) {
-      return { 
-        type: 'between',
+    if (
+      nextEvent &&
+      currentDate.value > event.dateRange.end &&
+      currentDate.value < nextEvent.dateRange.start
+    ) {
+      return {
+        type: "between",
         previousEvent: event,
-        nextEvent
-      }
+        nextEvent,
+      };
     }
   }
-  return null
-}
+  return null;
+};
 
-const currentPosition = computed(() => findCurrentPosition(timelineEvents.value))
+const currentPosition = computed(() =>
+  findCurrentPosition(timelineEvents.value),
+);
 
 const getTimelineStatus = (event: TimelineEvent) => {
   if (currentDate.value < event.dateRange.start) {
-    return 'upcoming'
+    return "upcoming";
   }
-  if (currentDate.value >= event.dateRange.start && currentDate.value <= event.dateRange.end) {
-    return 'current'
+  if (
+    currentDate.value >= event.dateRange.start &&
+    currentDate.value <= event.dateRange.end
+  ) {
+    return "current";
   }
-  return 'past'
-}
+  return "past";
+};
 
 const timelineEvents = ref<TimelineEvent[]>([
   {
     dateRange: {
       start: new Date(2024, 9, 21), // October 21
-      end: new Date(2024, 9, 24)    // October 24
+      end: new Date(2024, 9, 24), // October 24
     },
-    description: 'Phase 1: Initial Development'
+    description: "Phase 1: Initial Development",
   },
   {
     dateRange: {
       start: new Date(2024, 10, 12), // November 12
-      end: new Date(2024, 10, 14)    // November 14
+      end: new Date(2024, 10, 14), // November 14
     },
-    description: 'Phase 2: Core Implementation'
+    description: "Phase 2: Core Implementation",
   },
   {
     dateRange: {
       start: new Date(2024, 10, 19), // November 19
-      end: new Date(2024, 10, 22)    // November 22
+      end: new Date(2024, 10, 22), // November 22
     },
-    description: 'Phase 3: Feature Integration'
+    description: "Phase 3: Feature Integration",
   },
   {
     dateRange: {
       start: new Date(2024, 11, 10), // December 10
-      end: new Date(2024, 11, 12)    // December 12
+      end: new Date(2024, 11, 12), // December 12
     },
-    description: 'Phase 4: Testing & Optimization'
+    description: "Phase 4: Testing & Optimization",
   },
   {
     dateRange: {
-      start: new Date(2025, 0, 14),  // January 14
-      end: new Date(2025, 0, 16)     // January 16
+      start: new Date(2025, 0, 14), // January 14
+      end: new Date(2025, 0, 16), // January 16
     },
-    description: 'Phase 5: Final Review'
+    description: "Phase 5: Final Review",
   },
   {
     dateRange: {
-      start: new Date(2025, 1, 4),   // February 4
-      end: new Date(2025, 1, 7)      // February 7
+      start: new Date(2025, 1, 4), // February 4
+      end: new Date(2025, 1, 7), // February 7
     },
-    description: 'Phase 6: Launch & Deployment'
-  }
-])
+    description: "Phase 6: Launch & Deployment",
+  },
+]);
 </script>
 
 <template>
@@ -123,25 +147,42 @@ const timelineEvents = ref<TimelineEvent[]>([
           <span class="between-indicator"></span>
           Between Negotiation Sessions
         </div>
-        <div class="between-details">
-          <span>Next session starts {{ formatDateRange(currentPosition.nextEvent.dateRange.start, currentPosition.nextEvent.dateRange.end) }}</span>
+        <div class="between-details" v-if="currentPosition.nextEvent">
+          <span
+            >Next session starts
+            {{
+              formatDateRange(
+                currentPosition.nextEvent.dateRange.start,
+                currentPosition.nextEvent.dateRange.end,
+              )
+            }}</span
+          >
         </div>
       </template>
     </div>
 
-    <div v-for="(event, index) in timelineEvents" 
-         :key="index" 
-         class="timeline-event"
-         :class="[
-           getTimelineStatus(event),
-           { 'next-event': currentPosition?.type === 'between' && currentPosition.nextEvent === event }
-         ]"
-         :style="{ animationDelay: `${index * 0.2}s` }">
+    <div
+      v-for="(event, index) in timelineEvents"
+      :key="index"
+      class="timeline-event"
+      :class="[
+        getTimelineStatus(event),
+        {
+          'next-event':
+            currentPosition?.type === 'between' &&
+            currentPosition.nextEvent === event,
+        },
+      ]"
+      :style="{ animationDelay: `${index * 0.2}s` }"
+    >
       <div class="status-indicator"></div>
       <div class="date">
         {{ formatDateRange(event.dateRange.start, event.dateRange.end) }}
       </div>
-      <div v-if="getTimelineStatus(event) === 'current'" class="current-indicator">
+      <div
+        v-if="getTimelineStatus(event) === 'current'"
+        class="current-indicator"
+      >
         <span class="pulse"></span>
         <span class="text">Current</span>
       </div>
