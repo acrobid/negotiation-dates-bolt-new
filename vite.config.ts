@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "My Awesome App",
-        short_name: "MyApp",
-        description: "My Awesome App description",
+        name: "Negotiation dates",
+        short_name: "NegotiationDates",
+        description: "Negotiation dates",
         theme_color: "#ffffff",
         icons: [
           {
