@@ -1,17 +1,3 @@
-<script setup lang="ts">
-import { ref, onMounted } from "vue";
-import Timeline from "./components/Timeline.vue";
-import AnimatedBackground from "./components/AnimatedBackground.vue";
-import "@khmyznikov/pwa-install";
-import AcrobidLogoSvg from "./components/AcrobidLogoSvg.vue";
-
-const isVisible = ref(false);
-
-onMounted(() => {
-  isVisible.value = true;
-});
-</script>
-
 <template>
   <div class="app-container">
     <AnimatedBackground />
@@ -28,6 +14,20 @@ onMounted(() => {
     <pwa-install></pwa-install>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import Timeline from "./components/Timeline.vue";
+import AnimatedBackground from "./components/AnimatedBackground.vue";
+import "@khmyznikov/pwa-install";
+import AcrobidLogoSvg from "./components/AcrobidLogoSvg.vue";
+
+const isVisible = ref(false);
+
+onMounted(() => {
+  isVisible.value = true;
+});
+</script>
 
 <style>
 .app-container {
