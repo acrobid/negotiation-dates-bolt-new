@@ -42,6 +42,7 @@ setInterval(() => {
 }, 60000);
 
 const findCurrentPosition = (events: TimelineEvent[]) => {
+  console.log(currentDate.value);
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
     const nextEvent = events[i + 1];
@@ -98,35 +99,35 @@ const timelineEvents = ref<TimelineEvent[]>([
   {
     dateRange: {
       start: new Date(2024, 10, 12), // November 12
-      end: new Date(2024, 10, 14), // November 14
+      end: new Date(2024, 10, 14, 23), // November 14
     },
     description: "Phase 2: Core Implementation",
   },
   {
     dateRange: {
       start: new Date(2024, 10, 19), // November 19
-      end: new Date(2024, 10, 22), // November 22
+      end: new Date(2024, 10, 22, 23), // November 22
     },
     description: "Phase 3: Feature Integration",
   },
   {
     dateRange: {
       start: new Date(2024, 11, 10), // December 10
-      end: new Date(2024, 11, 12), // December 12
+      end: new Date(2024, 11, 12, 23), // December 12
     },
     description: "Phase 4: Testing & Optimization",
   },
   {
     dateRange: {
       start: new Date(2025, 0, 14), // January 14
-      end: new Date(2025, 0, 16), // January 16
+      end: new Date(2025, 0, 16, 23), // January 16
     },
     description: "Phase 5: Final Review",
   },
   {
     dateRange: {
       start: new Date(2025, 1, 4), // February 4
-      end: new Date(2025, 1, 7), // February 7
+      end: new Date(2025, 1, 7, 23), // February 7
     },
     description: "Phase 6: Launch & Deployment",
   },
