@@ -21,8 +21,6 @@ import Timeline from "./components/Timeline.vue";
 import AnimatedBackground from "./components/AnimatedBackground.vue";
 import "@khmyznikov/pwa-install";
 import AcrobidLogoSvg from "./components/AcrobidLogoSvg.vue";
-// @ts-ignore
-const markdown = import.meta.glob("../src/assets/**.md", { eager: true });
 
 const isVisible = ref(false);
 

@@ -21,6 +21,10 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watchEffect } from "vue";
 
+const markdown = import.meta.glob<typeof import("*.md")>("../assets/**.md", {
+  eager: true,
+});
+
 const props = defineProps<{
   title?: string;
   markdownFile: string;
@@ -50,8 +54,12 @@ const closeDialog = () => {
 watchEffect(async () => {
   if (props.markdownFile) {
     try {
-      const module = await import(`../assets/${props.markdownFile}`);
-      bodyContent.value = module.html;
+      const result = markdown[`../assets/${props.markdownFile}`];
+      if (result) {
+        bodyContent.value = result.html;
+      } else {
+        throw new Error("Markdown file not found");
+      }
     } catch (error) {
       console.error(`Error loading markdown file: ${error}`);
       bodyContent.value = "Error loading content";
