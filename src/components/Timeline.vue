@@ -102,6 +102,7 @@ const timelineEvents = ref<TimelineEvent[]>([
       start: new Date(2024, 10, 12), // November 12
       end: new Date(2024, 10, 14, 23), // November 14
     },
+    markdownFile: "update2.md",
   },
   {
     dateRange: {
