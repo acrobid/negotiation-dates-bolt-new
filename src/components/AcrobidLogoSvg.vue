@@ -1,9 +1,6 @@
 <style scoped>
 .acrobid-logo {
-  fill: white; /* Ensure the SVG text is white */
-  stroke: white;
-  color: white;
-  border-color: white;
+  stroke: black;
 }
 </style>
 
