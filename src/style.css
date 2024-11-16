@@ -3,14 +3,18 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #121212;
+  color-scheme: light;
+  color: #213547;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  --grid-color: rgba(0, 0, 0, 0.05);
+  --grid-size: 20px;
+  --grid-size-large: 100px;
 }
 
 * {
@@ -24,6 +28,17 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
+  background-image: 
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size),
+    var(--grid-size-large) var(--grid-size-large),
+    var(--grid-size-large) var(--grid-size-large);
+  background-color: #ffffff;
 }
 
 #app {

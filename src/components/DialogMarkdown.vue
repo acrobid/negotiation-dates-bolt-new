@@ -81,6 +81,8 @@ defineExpose({
   transition-duration: 0.3s;
 
   opacity: 0;
+  background: white;
+  color: #213547;
 }
 
 .modal[open] {
@@ -122,8 +124,8 @@ defineExpose({
 
   top: 0;
   position: sticky;
-  background-color: #333;
-  color: white;
+  background-color: #f5f5f5;
+  color: #213547;
 }
 
 .close-button {
@@ -142,5 +144,6 @@ defineExpose({
 
 :deep(.dialog-body p) {
   margin-bottom: 2em; /* Increase spacing between paragraphs */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 </style>

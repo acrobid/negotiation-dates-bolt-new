@@ -36,7 +36,7 @@ const formatDateRange = (start: Date, end: Date): string => {
   return `${startMonth} ${start.getDate()} - ${endMonth} ${end.getDate()}`;
 };
 
-const currentDate = ref(new Date()); // October 21
+const currentDate = ref(new Date(/* "2024-11-21" */));
 
 // Update current date every minute
 setInterval(() => {
@@ -190,7 +190,6 @@ function dateToTitle(dateRange: { start: Date; end: Date }) {
       ]"
       :style="{ animationDelay: `${index * 0.2}s` }"
     >
-      <div class="status-indicator"></div>
       <div class="date">
         {{ formatDateRange(event.dateRange.start, event.dateRange.end) }}
       </div>
@@ -222,24 +221,20 @@ function dateToTitle(dateRange: { start: Date; end: Date }) {
 
 <style scoped>
 button {
-  color: #000;
+  color: #213547;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1rem;
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  font-weight: normal;
+  font-size: 0.9rem;
+  background: rgba(0, 0, 0, 0.05);
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 button:hover {
-  background: linear-gradient(135deg, #feb47b, #ff7e5f);
-  transform: translateY(-2px);
-}
-
-button:active {
-  transform: translateY(0);
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.3);
 }
 
 .timeline {
@@ -250,12 +245,42 @@ button:active {
 
 .current-status {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
   padding: 1.5rem;
   margin-bottom: 2rem;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timeline-event {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.timeline-event:hover {
+  background: rgba(0, 102, 204, 0.05);
+  transform: translateY(-2px);
+}
+
+.date {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 1.2rem;
+  color: #0066cc; /* Changed from #00f0ff for better contrast */
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.date::before {
+  content: "[";
+}
+
+.date::after {
+  content: "]";
 }
 
 .status-badge {
@@ -269,47 +294,38 @@ button:active {
 }
 
 .status-badge.current {
-  background: rgba(255, 193, 7, 0.2);
-  color: #ffc107;
+  background: rgba(0, 102, 204, 0.1);
+  color: #0066cc;
+  text-shadow: none;
 }
 
 .status-badge.between {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: rgba(0, 0, 0, 0.1); /* Changed from rgba(255, 255, 255, 0.1) */
+  color: #213547; /* Changed from #ffffff */
 }
 
 .between-indicator {
   width: 10px;
   height: 10px;
-  background: #ffffff;
+  background: #0066cc33; /* Changed from #ffffff */
   border-radius: 50%;
   animation: glow 2s infinite;
 }
 
 .between-details {
   margin-top: 0.5rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: #666666; /* Changed from rgba(255, 255, 255, 0.7) */
   font-size: 0.9rem;
 }
 
-.timeline-event {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  @starting-style {
-    transform: translateX(-50px);
-  }
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 1s ease;
-  position: relative;
-  padding-left: 3rem;
-}
-
 .next-event {
-  border-color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
+  border-color: #0066cc; /* Changed from #ffffff */
+  background: rgba(
+    0,
+    102,
+    204,
+    0.1
+  ); /* Changed from rgba(255, 255, 255, 0.1) */
 }
 
 .status-indicator {
@@ -336,31 +352,29 @@ button:active {
 }
 
 .timeline-event.past {
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 1);
-  opacity: 0.5;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Reduced shadow intensity */
+  opacity: 0.7; /* Increased from 0.5 for better visibility */
   transform: translateX(-20px);
 }
 
 .timeline-event.current {
-  border-color: #ffc107;
-  background: rgba(255, 193, 7, 0.1);
-  transform: scale(1.02);
+  border-color: #0066cc;
+  background: rgba(0, 102, 204, 0.05);
+  box-shadow: 0 0 30px rgba(0, 102, 204, 0.1);
 }
 
 .timeline-event:hover {
   transform: scale(1.02);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.date {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 0.5rem;
+  background: rgba(
+    0,
+    102,
+    204,
+    0.05
+  ); /* Changed from rgba(255, 255, 255, 0.1) */
 }
 
 .description {
-  color: #cccccc;
+  color: #444444; /* Changed from #cccccc */
   font-size: 1.1rem;
 }
 
@@ -377,9 +391,10 @@ button:active {
 .pulse {
   width: 10px;
   height: 10px;
-  background: #ffc107;
+  background: #0066cc; /* Changed from #00ffff for better contrast */
   border-radius: 50%;
   animation: pulse 2s infinite;
+  box-shadow: 0 0 20px #0066cc; /* Changed from #00ffff for better contrast */
 }
 
 .current-indicator .text {
@@ -392,23 +407,33 @@ button:active {
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4);
+    box-shadow: 0 0 0 0 rgba(255, 0, 242, 0.4);
   }
   70% {
-    box-shadow: 0 0 0 20px rgba(255, 193, 7, 0);
+    box-shadow: 0 0 0 20px rgba(0, 255, 255, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0);
   }
 }
 
 @keyframes glow {
   0%,
   100% {
-    box-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+    box-shadow: 0 0 10px rgba(0, 102, 204, 0.4); /* Changed from #ffffff */
   }
   50% {
-    box-shadow: 0 0 20px #ffffff, 0 0 40px #ffffff, 0 0 60px #ffffff;
+    box-shadow: 0 0 20px rgba(0, 102, 204, 0.6); /* Changed from #ffffff */
+  }
+}
+
+@keyframes neonPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
   }
 }
 </style>
