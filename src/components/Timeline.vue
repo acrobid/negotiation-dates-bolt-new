@@ -9,6 +9,7 @@ interface TimelineEvent {
   };
   description?: string;
   markdownFile?: string;
+  canceled?: boolean;
 }
 
 const formatDateRange = (start: Date, end: Date): string => {
@@ -45,8 +46,9 @@ setInterval(() => {
 
 const findCurrentPosition = (events: TimelineEvent[]) => {
   for (let i = 0; i < events.length; i++) {
-    const event = events[i];
-    const nextEvent = events[i + 1];
+    const nonCanceledEvents = events.filter((event) => !event.canceled);
+    const event = nonCanceledEvents[i];
+    const nextEvent = nonCanceledEvents[i + 1];
 
     // If we're in an event's date range
     if (
@@ -116,12 +118,15 @@ const timelineEvents = ref<TimelineEvent[]>([
       start: new Date(2024, 11, 10), // December 10
       end: new Date(2024, 11, 12, 23), // December 12
     },
+    markdownFile: "update4.md",
   },
   {
     dateRange: {
       start: new Date(2025, 0, 14), // January 14
       end: new Date(2025, 0, 16, 23), // January 16
     },
+    description: "Canceled by the national mediation board.",
+    canceled: true,
   },
   {
     dateRange: {
@@ -191,8 +196,11 @@ function dateToTitle(dateRange: { start: Date; end: Date }) {
       ]"
       :style="{ animationDelay: `${index * 0.2}s` }"
     >
-      <div class="date">
+      <div class="date" :class="{ canceled: event.canceled }">
         {{ formatDateRange(event.dateRange.start, event.dateRange.end) }}
+      </div>
+      <div v-if="event.description" class="description">
+        {{ event.description }}
       </div>
       <div
         v-if="getTimelineStatus(event) === 'current'"
@@ -439,5 +447,10 @@ button:hover {
   50% {
     box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
   }
+}
+
+.canceled {
+  text-decoration: line-through;
+  opacity: 0.5;
 }
 </style>
