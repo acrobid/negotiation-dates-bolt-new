@@ -133,6 +133,16 @@ const timelineEvents = ref<TimelineEvent[]>([
       start: new Date(2025, 1, 4), // February 4
       end: new Date(2025, 1, 7, 23), // February 7
     },
+    description:
+      "Preempted for the February 11th status update meeting with the NMB.",
+    canceled: true,
+  },
+  {
+    dateRange: {
+      start: new Date(2025, 1, 11), // February 11
+      end: new Date(2025, 1, 11), // February 11
+    },
+    description: "Status update meeting with new NMB mediator.",
   },
 ]);
 
