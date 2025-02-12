@@ -45,8 +45,9 @@ setInterval(() => {
 }, 60000);
 
 const findCurrentPosition = (events: TimelineEvent[]) => {
-  for (let i = 0; i < events.length; i++) {
-    const nonCanceledEvents = events.filter((event) => !event.canceled);
+  const nonCanceledEvents = events.filter((event) => !event.canceled);
+
+  for (let i = 0; i < nonCanceledEvents.length; i++) {
     const event = nonCanceledEvents[i];
     const nextEvent = nonCanceledEvents[i + 1];
 
@@ -71,6 +72,12 @@ const findCurrentPosition = (events: TimelineEvent[]) => {
       };
     }
   }
+
+  // Check if all dates are in the past
+  if (nonCanceledEvents.length > 0 && currentDate.value > nonCanceledEvents[nonCanceledEvents.length - 1].dateRange.end) {
+    return { type: "all-past" };
+  }
+
   return null;
 };
 
@@ -187,6 +194,12 @@ function dateToTitle(dateRange: { start: Date; end: Date }) {
               )
             }}</span
           >
+        </div>
+      </template>
+      <template v-else-if="currentPosition.type === 'all-past'">
+        <div class="status-badge all-past">
+          <span class="all-past-indicator"></span>
+          All sessions are in the past
         </div>
       </template>
     </div>
