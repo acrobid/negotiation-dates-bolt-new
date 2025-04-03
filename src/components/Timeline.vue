@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, useTemplateRef } from "vue";
 import DialogMarkdown from "./DialogMarkdown.vue";
+import { timelineEvents } from "../config/timelineEvents";
 
 interface TimelineEvent {
   dateRange: {
@@ -45,8 +46,9 @@ setInterval(() => {
 }, 60000);
 
 const findCurrentPosition = (events: TimelineEvent[]) => {
-  for (let i = 0; i < events.length; i++) {
-    const nonCanceledEvents = events.filter((event) => !event.canceled);
+  const nonCanceledEvents = events.filter((event) => !event.canceled);
+
+  for (let i = 0; i < nonCanceledEvents.length; i++) {
     const event = nonCanceledEvents[i];
     const nextEvent = nonCanceledEvents[i + 1];
 
@@ -71,11 +73,17 @@ const findCurrentPosition = (events: TimelineEvent[]) => {
       };
     }
   }
+
+  // Check if all dates are in the past
+  if (nonCanceledEvents.length > 0 && currentDate.value > nonCanceledEvents[nonCanceledEvents.length - 1].dateRange.end) {
+    return { type: "all-past" };
+  }
+
   return null;
 };
 
 const currentPosition = computed(() =>
-  findCurrentPosition(timelineEvents.value),
+  findCurrentPosition(timelineEvents),
 );
 
 const getTimelineStatus = (event: TimelineEvent) => {
@@ -90,61 +98,6 @@ const getTimelineStatus = (event: TimelineEvent) => {
   }
   return "past";
 };
-
-const timelineEvents = ref<TimelineEvent[]>([
-  {
-    dateRange: {
-      start: new Date(2024, 9, 21), // October 21
-      end: new Date(2024, 9, 24), // October 24
-    },
-    markdownFile: "update1.md",
-  },
-  {
-    dateRange: {
-      start: new Date(2024, 10, 12), // November 12
-      end: new Date(2024, 10, 14, 23), // November 14
-    },
-    markdownFile: "update2.md",
-  },
-  {
-    dateRange: {
-      start: new Date(2024, 10, 19), // November 19
-      end: new Date(2024, 10, 22, 23), // November 22
-    },
-    markdownFile: "update3.md",
-  },
-  {
-    dateRange: {
-      start: new Date(2024, 11, 10), // December 10
-      end: new Date(2024, 11, 12, 23), // December 12
-    },
-    markdownFile: "update4.md",
-  },
-  {
-    dateRange: {
-      start: new Date(2025, 0, 14), // January 14
-      end: new Date(2025, 0, 16, 23), // January 16
-    },
-    description: "Canceled by the national mediation board.",
-    canceled: true,
-  },
-  {
-    dateRange: {
-      start: new Date(2025, 1, 4), // February 4
-      end: new Date(2025, 1, 7, 23), // February 7
-    },
-    description:
-      "Preempted for the February 11th status update meeting with the NMB.",
-    canceled: true,
-  },
-  {
-    dateRange: {
-      start: new Date(2025, 1, 11), // February 11
-      end: new Date(2025, 1, 11), // February 11
-    },
-    description: "Status update meeting with new NMB mediator.",
-  },
-]);
 
 const dialogTitle = ref("");
 const markdownFile = ref("");
@@ -187,6 +140,12 @@ function dateToTitle(dateRange: { start: Date; end: Date }) {
               )
             }}</span
           >
+        </div>
+      </template>
+      <template v-else-if="currentPosition.type === 'all-past'">
+        <div class="status-badge all-past">
+          <span class="all-past-indicator"></span>
+          All sessions are in the past
         </div>
       </template>
     </div>
