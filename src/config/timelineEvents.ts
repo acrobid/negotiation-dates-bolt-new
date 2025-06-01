@@ -70,6 +70,7 @@ export const timelineEvents = [
       start: new Date(2025, 4, 28), // May 28
       end: new Date(2025, 4, 30), // May 30
     },
+    markdownFile: "update7.md",
   },
   {
     dateRange: {
