@@ -77,5 +77,6 @@ export const timelineEvents = [
       start: new Date(2025, 5, 24), // June 24
       end: new Date(2025, 5, 26), // June 26
     },
+    markdownFile: "update25-08.md",
   },
 ];
